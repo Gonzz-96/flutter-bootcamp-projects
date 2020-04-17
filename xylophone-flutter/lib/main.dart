@@ -6,7 +6,7 @@ void main() => runApp(XylophoneApp());
 class XylophoneApp extends StatelessWidget {
   final player = AudioCache();
 
-  Expanded _generateFlatButton(int soundNumber, MaterialColor materialColor) =>
+  Expanded _generateColorfulKey(int soundNumber, MaterialColor materialColor) =>
       Expanded(
         child: FlatButton(
           child: null,
@@ -26,13 +26,13 @@ class XylophoneApp extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              _generateFlatButton(1, Colors.red),
-              _generateFlatButton(2, Colors.orange),
-              _generateFlatButton(3, Colors.yellow),
-              _generateFlatButton(4, Colors.lightGreen),
-              _generateFlatButton(5, Colors.green),
-              _generateFlatButton(6, Colors.blue),
-              _generateFlatButton(7, Colors.purple),
+              _generateColorfulKey(1, Colors.red),
+              _generateColorfulKey(2, Colors.orange),
+              _generateColorfulKey(3, Colors.yellow),
+              _generateColorfulKey(4, Colors.lightGreen),
+              _generateColorfulKey(5, Colors.green),
+              _generateColorfulKey(6, Colors.blue),
+              _generateColorfulKey(7, Colors.purple),
             ],
           ),
         ),
