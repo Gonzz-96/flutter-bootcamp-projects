@@ -6,14 +6,15 @@ void main() => runApp(XylophoneApp());
 class XylophoneApp extends StatelessWidget {
   final player = AudioCache();
 
-  FlatButton _generateFlatButton(
-          int soundNumber, MaterialColor materialColor) =>
-      FlatButton(
-        child: null,
-        color: materialColor,
-        onPressed: () {
-          player.play('note$soundNumber.wav');
-        },
+  Expanded _generateFlatButton(int soundNumber, MaterialColor materialColor) =>
+      Expanded(
+        child: FlatButton(
+          child: null,
+          color: materialColor,
+          onPressed: () {
+            player.play('note$soundNumber.wav');
+          },
+        ),
       );
 
   @override
@@ -23,6 +24,7 @@ class XylophoneApp extends StatelessWidget {
         backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _generateFlatButton(1, Colors.red),
               _generateFlatButton(2, Colors.orange),
