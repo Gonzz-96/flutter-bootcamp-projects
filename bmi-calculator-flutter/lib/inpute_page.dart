@@ -57,6 +57,10 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
+// CONST: it's a IMMUTABLE COMPILE TIME variable
+// FINAL: it's only an IMMUTABLE variable.
+// CONST implies FINAL, but CONST is static
+
 class ReusableCard extends StatelessWidget {
   final Color cardColor;
 
