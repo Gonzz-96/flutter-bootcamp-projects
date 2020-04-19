@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const CARD_PRIMARY_COLOR = Color(0xFF1D1E33);
+const CALCULATE_BUTTON_COLOR = Color(0xFFEB1555);
+
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
@@ -19,12 +22,12 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    cardColor: Color(0xFF1D1E33),
+                    cardColor: CARD_PRIMARY_COLOR,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    cardColor: Color(0xFF1D1E33),
+                    cardColor: CARD_PRIMARY_COLOR,
                   ),
                 ),
               ],
@@ -32,7 +35,7 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableCard(
-              cardColor: Color(0xFF1D1E33),
+              cardColor: CARD_PRIMARY_COLOR,
             ),
           ),
           Expanded(
@@ -40,16 +43,22 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    cardColor: Color(0xFF1D1E33),
+                    cardColor: CARD_PRIMARY_COLOR,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    cardColor: Color(0xFF1D1E33),
+                    cardColor: CARD_PRIMARY_COLOR,
                   ),
                 ),
               ],
             ),
+          ),
+          Container(
+            color: CALCULATE_BUTTON_COLOR,
+            margin: EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: 80.0,
           ),
         ],
       ),
