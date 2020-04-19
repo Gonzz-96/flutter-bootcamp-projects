@@ -1,12 +1,9 @@
 import 'package:bmi_calculator/reusable_card.dart';
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
 import 'genre.dart';
 import 'icon_content.dart';
-
-const ACTIVE_CARD_COLOR = Color(0xFF1D1E33);
-const INACTIVE_CARD_COLOR = Color(0xff111328);
-const CALCULATE_BUTTON_COLOR = Color(0xFFEB1555);
 
 class InputPage extends StatefulWidget {
   @override
@@ -15,6 +12,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Genre selectedGender;
+  int selectedHeight = 120;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +21,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -31,8 +30,8 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     child: IconContent(cardGenre: Genre.male),
                     cardColor: selectedGender == Genre.male
-                        ? ACTIVE_CARD_COLOR
-                        : INACTIVE_CARD_COLOR,
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
                     onPress: () {
                       setState(() {
                         selectedGender = Genre.male;
@@ -44,8 +43,8 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     child: IconContent(cardGenre: Genre.female),
                     cardColor: selectedGender == Genre.female
-                        ? ACTIVE_CARD_COLOR
-                        : INACTIVE_CARD_COLOR,
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
                     onPress: () {
                       setState(() {
                         selectedGender = Genre.female;
@@ -58,7 +57,44 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableCard(
-              cardColor: ACTIVE_CARD_COLOR,
+              cardColor: kActiveCardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIHGT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        selectedHeight.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    onChanged: (double value) {
+                      print("Slides Value: $value");
+                      setState(() {
+                        selectedHeight = value.round();
+                      });
+                    },
+                    value: selectedHeight.toDouble(),
+                    max: 220.0,
+                    min: 120.0,
+                    activeColor: Color(0xFFEB1555),
+                    inactiveColor: Color(0xFF8D8E98),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -66,19 +102,19 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    cardColor: ACTIVE_CARD_COLOR,
+                    cardColor: kActiveCardColor,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    cardColor: ACTIVE_CARD_COLOR,
+                    cardColor: kActiveCardColor,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: CALCULATE_BUTTON_COLOR,
+            color: kCalculateButtonColor,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
             height: 80.0,
