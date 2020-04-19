@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'genre.dart';
 import 'icon_content.dart';
 
-const CARD_PRIMARY_COLOR = Color(0xFF1D1E33);
+const ACTIVE_CARD_COLOR = Color(0xFF1D1E33);
+const INACTIVE_CARD_COLOR = Color(0xff111328);
 const CALCULATE_BUTTON_COLOR = Color(0xFFEB1555);
 
 class InputPage extends StatefulWidget {
@@ -27,13 +28,13 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableCard(
                     child: IconContent(cardGenre: Genre.male),
-                    cardColor: CARD_PRIMARY_COLOR,
+                    cardColor: ACTIVE_CARD_COLOR,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
                     child: IconContent(cardGenre: Genre.female),
-                    cardColor: CARD_PRIMARY_COLOR,
+                    cardColor: ACTIVE_CARD_COLOR,
                   ),
                 ),
               ],
@@ -41,7 +42,7 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableCard(
-              cardColor: CARD_PRIMARY_COLOR,
+              cardColor: ACTIVE_CARD_COLOR,
             ),
           ),
           Expanded(
@@ -49,12 +50,12 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    cardColor: CARD_PRIMARY_COLOR,
+                    cardColor: ACTIVE_CARD_COLOR,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    cardColor: CARD_PRIMARY_COLOR,
+                    cardColor: ACTIVE_CARD_COLOR,
                   ),
                 ),
               ],
