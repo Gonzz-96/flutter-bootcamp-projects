@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class ResultsPage extends StatelessWidget {
+  ResultsPage({
+    @required this.bmiResult,
+    @required this.resultText,
+    @required this.interpretation,
+  });
+
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,25 +43,28 @@ class ResultsPage extends StatelessWidget {
               cardColor: kActiveCardColor,
               child: Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      "STATUS",
+                      resultText.toUpperCase(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                           color: Colors.lightGreen),
                     ),
                     Text(
-                      "26.1",
+                      bmiResult,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 100.0,
                       ),
                     ),
                     Text(
-                      "Here goes that shit",
-                      style: TextStyle(fontSize: 20),
+                      interpretation,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     )
                   ],
                 ),

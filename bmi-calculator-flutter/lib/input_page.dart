@@ -7,6 +7,7 @@ import 'constants.dart';
 import 'genre.dart';
 import 'icon_content.dart';
 import 'results_page.dart';
+import 'calculator_brain.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Genre selectedGender;
-  int selectedHeight = 120;
+  int height = 120;
   int weight = 60;
   int age = 10;
 
@@ -76,7 +77,7 @@ class _InputPageState extends State<InputPage> {
                     textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
                       Text(
-                        selectedHeight.toString(),
+                        height.toString(),
                         style: kNumberTextStyle,
                       ),
                       Text(
@@ -99,10 +100,10 @@ class _InputPageState extends State<InputPage> {
                       onChanged: (double value) {
                         print("Slides Value: $value");
                         setState(() {
-                          selectedHeight = value.round();
+                          height = value.round();
                         });
                       },
-                      value: selectedHeight.toDouble(),
+                      value: height.toDouble(),
                       max: 220.0,
                       min: 120.0,
                     ),
@@ -197,8 +198,21 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResultsPage()));
+              CalculatorBrain calculatorBrain = CalculatorBrain(
+                height: height,
+                weight: weight,
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    bmiResult: calculatorBrain.calculateBMI(),
+                    resultText: calculatorBrain.getResult(),
+                    interpretation: calculatorBrain.getInterpretation(),
+                  ),
+                ),
+              );
             },
             child: Container(
               color: kCalculateButtonColor,
