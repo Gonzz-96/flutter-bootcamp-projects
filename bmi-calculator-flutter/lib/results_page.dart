@@ -62,6 +62,7 @@ class ResultsPage extends StatelessWidget {
                     ),
                     Text(
                       interpretation,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
                       ),
