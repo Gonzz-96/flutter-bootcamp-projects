@@ -9,8 +9,16 @@ class WeatherModel {
     Location location = Location();
     await location.getCurrentLocation();
 
-    var url = 'https://api.openweathermap.org/data/2.5/weather' +
+    String url = 'https://api.openweathermap.org/data/2.5/weather' +
         '?lat=${location.latitude}&lon=${location.longitude}&appid=$kApiKey&units=$kUnit';
+
+    var weatherData = await NetworkHelper(url: url).getData();
+    return weatherData;
+  }
+
+  Future<dynamic> getCityWeather(String cityName) async {
+    String url = 'https://api.openweathermap.org/data/2.5/weather' +
+        '?q=$cityName&appid=$kApiKey&units=$kUnit';
 
     var weatherData = await NetworkHelper(url: url).getData();
     return weatherData;
