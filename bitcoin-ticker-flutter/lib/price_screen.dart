@@ -9,12 +9,36 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  List<Widget> generateDropdownMenuItems() => currenciesList.map((currency) {
+  CupertinoPicker getCupertinoPicker() => CupertinoPicker(
+        backgroundColor: Colors.lightBlue,
+        children: _generateCupertinoMenuItems(),
+        itemExtent: 32.0,
+        onSelectedItemChanged: (selectedIndex) {
+          print("$selectedIndex: ${currenciesList[selectedIndex]}");
+        },
+      );
+
+  List<Widget> _generateCupertinoMenuItems() => currenciesList.map((currency) {
         return Text(
           currency,
           style: TextStyle(
             color: Colors.white,
           ),
+        );
+      }).toList();
+
+  DropdownButton<String> getDropDownButton() => DropdownButton<String>(
+        items: _generateDropdownMenuItems(),
+        onChanged: (value) {
+          print(value);
+        },
+      );
+
+  List<DropdownMenuItem<String>> _generateDropdownMenuItems() =>
+      currenciesList.map((currency) {
+        return DropdownMenuItem(
+          value: currency,
+          child: Text(currency),
         );
       }).toList();
 
@@ -54,14 +78,7 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: CupertinoPicker(
-              backgroundColor: Colors.lightBlue,
-              children: generateDropdownMenuItems(),
-              itemExtent: 32.0,
-              onSelectedItemChanged: (selectedIndex) {
-                print("$selectedIndex: ${currenciesList[selectedIndex]}");
-              },
-            ),
+            child: getCupertinoPicker(),
           ),
         ],
       ),
