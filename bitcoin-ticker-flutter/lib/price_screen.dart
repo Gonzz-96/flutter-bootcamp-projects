@@ -1,3 +1,5 @@
+import 'package:bitcoin_ticker/data/currency_data_source.dart';
+import 'package:bitcoin_ticker/data/currency_exchange_rate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -10,7 +12,26 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  String currentCurrency = 'USD';
+  bool isWaiting = false;
+  String currentCurrency = 'AUD';
+  CurrencyExchangeRate btcToCurrentCurrencyExchangeRate;
+
+  @override
+  void initState() {
+    super.initState();
+    getExchangeRate();
+  }
+
+  void getExchangeRate() async {
+    isWaiting = true;
+    var currencyDataSource = CurrencyDataSource();
+    var btcToCurrentCurrency =
+        await currencyDataSource.getExchangeRate('BTC', currentCurrency);
+    setState(() {
+      btcToCurrentCurrencyExchangeRate = btcToCurrentCurrency;
+      isWaiting = false;
+    });
+  }
 
   CupertinoPicker getCupertinoPicker() => CupertinoPicker(
         backgroundColor: Colors.lightBlue,
@@ -18,6 +39,8 @@ class _PriceScreenState extends State<PriceScreen> {
         itemExtent: 32.0,
         onSelectedItemChanged: (selectedIndex) {
           print("$selectedIndex: ${currenciesList[selectedIndex]}");
+          currentCurrency = currenciesList[selectedIndex];
+          getExchangeRate();
         },
       );
 
@@ -36,6 +59,7 @@ class _PriceScreenState extends State<PriceScreen> {
         onChanged: (value) {
           setState(() {
             currentCurrency = value;
+            getExchangeRate();
           });
         },
       );
@@ -77,7 +101,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = ${isWaiting ? '?' : btcToCurrentCurrencyExchangeRate.exchangeRate.toStringAsFixed(2)} $currentCurrency',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
