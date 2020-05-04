@@ -1,5 +1,4 @@
 import 'package:bitcoin_ticker/data/currency_data_source.dart';
-import 'package:bitcoin_ticker/data/currency_exchange_rate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -14,7 +13,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   bool isWaiting = false;
   String currentCurrency = 'AUD';
-  CurrencyExchangeRate btcToCurrentCurrencyExchangeRate;
+  Map<String, double> exchangeRates = {};
 
   @override
   void initState() {
@@ -25,12 +24,32 @@ class _PriceScreenState extends State<PriceScreen> {
   void getExchangeRate() async {
     isWaiting = true;
     var currencyDataSource = CurrencyDataSource();
-    var btcToCurrentCurrency =
-        await currencyDataSource.getExchangeRate('BTC', currentCurrency);
+
+    cryptoList.forEach((crypto) async {
+      exchangeRates[crypto] =
+          await currencyDataSource.getExchangeRate(crypto, currentCurrency);
+    });
+
     setState(() {
-      btcToCurrentCurrencyExchangeRate = btcToCurrentCurrency;
       isWaiting = false;
     });
+  }
+
+  Column getCards() {
+    List<Widget> currencyCards = List();
+    exchangeRates.forEach((cryptoCurrency, exchangeRate) {
+      currencyCards.add(CurrencyCard(
+        baseCurrency: cryptoCurrency,
+        destinationCurrency: currentCurrency,
+        exchangeRate:
+            isWaiting ? exchangeRate.toStringAsFixed(2).toString() : '??',
+      ));
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: currencyCards,
+    );
   }
 
   CupertinoPicker getCupertinoPicker() => CupertinoPicker(
@@ -38,7 +57,6 @@ class _PriceScreenState extends State<PriceScreen> {
         children: _generateCupertinoMenuItems(),
         itemExtent: 32.0,
         onSelectedItemChanged: (selectedIndex) {
-          print("$selectedIndex: ${currenciesList[selectedIndex]}");
           currentCurrency = currenciesList[selectedIndex];
           getExchangeRate();
         },
@@ -90,27 +108,7 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = ${isWaiting ? '?' : btcToCurrentCurrencyExchangeRate.exchangeRate.toStringAsFixed(2)} $currentCurrency',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          getCards(),
           Container(
             height: 150.0,
             alignment: Alignment.center,
@@ -119,6 +117,43 @@ class _PriceScreenState extends State<PriceScreen> {
             child: getSpecificPicker(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CurrencyCard extends StatelessWidget {
+  CurrencyCard({
+    this.baseCurrency,
+    this.destinationCurrency,
+    this.exchangeRate,
+  });
+
+  final String baseCurrency;
+  final String destinationCurrency;
+  final String exchangeRate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+      child: Card(
+        color: Colors.lightBlueAccent,
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+          child: Text(
+            '1 $baseCurrency = $exchangeRate $destinationCurrency',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }
