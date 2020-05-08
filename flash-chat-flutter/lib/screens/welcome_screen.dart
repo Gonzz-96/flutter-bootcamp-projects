@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 
@@ -24,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Row(
               children: <Widget>[
                 Hero(
-                  tag: 'logo',
+                  tag: kLogoHeroTag,
                   child: Container(
                     child: Image.asset('images/logo.png'),
                     height: 60.0,

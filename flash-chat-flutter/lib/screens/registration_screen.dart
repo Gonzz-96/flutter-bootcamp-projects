@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
 
@@ -19,7 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Hero(
-              tag: 'logo',
+              tag: kLogoHeroTag,
               child: Container(
                 height: 200.0,
                 child: Image.asset('images/logo.png'),
