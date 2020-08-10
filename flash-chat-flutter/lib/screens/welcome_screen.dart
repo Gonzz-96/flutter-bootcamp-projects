@@ -11,11 +11,58 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // While using CurvedAnimations class, the upper bound parameter must be always
+    // 1. If a greater value is used, we'll have a runtime exception.
+    controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+
+    // Tween animations. Go in between values.
+    animation = ColorTween(
+      begin: Colors.blueGrey,
+      end: Colors.white,
+    ).animate(controller);
+
+//    animation = CurvedAnimation(
+//      parent: controller,
+//      curve: Curves.decelerate,
+//    );
+
+    controller.forward();
+
+//    animation.addStatusListener((status) {
+//      if (status == AnimationStatus.completed) {
+//        controller.reverse(from: 1);
+//      } else if (status == AnimationStatus.dismissed) {
+//        controller.forward();
+//      }
+//    });
+
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
