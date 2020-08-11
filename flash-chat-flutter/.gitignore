@@ -15,6 +15,9 @@
 *.iws
 .idea/
 
+# Firebase Android Related
+google-services.json
+
 # Visual Studio Code related
 .vscode/
 
