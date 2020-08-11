@@ -18,6 +18,9 @@
 # Firebase Android Related
 google-services.json
 
+# Firebase iOS Related
+GoogleService-info.plist
+
 # Visual Studio Code related
 .vscode/
 
