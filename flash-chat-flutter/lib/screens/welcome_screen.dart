@@ -24,10 +24,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     // While using CurvedAnimations class, the upper bound parameter must be always
     // 1. If a greater value is used, we'll have a runtime exception.
-    controller = AnimationController(
-      duration: Duration(seconds: 2),
-      vsync: this,
-    );
+    controller =
+        AnimationController(duration: Duration(seconds: 2), vsync: this);
 
     animation = ColorTween(
       begin: Colors.blueGrey,
