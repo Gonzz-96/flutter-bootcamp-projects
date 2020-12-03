@@ -52,6 +52,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               textAlign: TextAlign.center,
               controller: textFieldController,
               onSubmitted: _onSubmit,
+              // TextField widget has also a 'onChanged' attribute
             ),
             SizedBox(height: 20),
             FlatButton(
