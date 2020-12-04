@@ -27,9 +27,7 @@ class _TaskScreenState extends State<TaskScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(
-                  onNewTaskAdded: (Task newTask) {},
-                ),
+                child: AddTaskScreen(),
               ),
             ),
           );

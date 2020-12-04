@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_app/models/task.dart';
+import 'package:todoey_app/models/task_data.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  AddTaskScreen({this.onNewTaskAdded});
-
-  final Function onNewTaskAdded;
-
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final textFieldController = TextEditingController();
+  Function get onTaskAdded {
+    return Provider.of<TaskData>(context, listen: false).addNewTask;
+  }
 
   @override
   void dispose() {
@@ -21,7 +22,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   void _onSubmit(String taskName) {
     final newTask = Task(name: textFieldController.text);
-    widget.onNewTaskAdded(newTask);
+    onTaskAdded(newTask);
     Navigator.of(context).pop();
   }
 
