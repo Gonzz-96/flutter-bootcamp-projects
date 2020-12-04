@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_app/models/task.dart';
+import 'package:todoey_app/models/task_data.dart';
 import 'package:todoey_app/screens/add_task_screen.dart';
 import 'package:todoey_app/widgets/tasks_list.dart';
 
@@ -9,11 +11,9 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Go tot the gym'),
-    Task(name: 'Make homework'),
-  ];
+  List<Task> get tasks {
+    return Provider.of<TaskData>(context).tasks;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: AddTaskScreen(
-                  onNewTaskAdded: (Task newTask) {
-                    setState(() {
-                      tasks.add(newTask);
-                    });
-                  },
+                  onNewTaskAdded: (Task newTask) {},
                 ),
               ),
             ),
@@ -84,7 +80,7 @@ class _TaskScreenState extends State<TaskScreen> {
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: TasksList(tasks: tasks),
+              child: TasksList(),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
